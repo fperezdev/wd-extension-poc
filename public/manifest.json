@@ -1,0 +1,30 @@
+{
+  "manifest_version": 3,
+  "name": "Wird Extension POC",
+  "version": "1.0.0",
+  "description": "Poc for new Wird Extension.",
+  "icons": {
+    "128": "wLogoGreen.png"
+  },
+  "action": {
+    "default_popup": "index.html"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://mail.google.com/*"],
+      "js": ["wd-extension-load.js"]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["assets/index.js"],
+      "matches": ["https://mail.google.com/*"]
+    }
+  ],
+  "background": {
+    "service_worker": "service-worker.js",
+    "type": "module"
+  },
+  "permissions": ["scripting", "tabs"],
+  "host_permissions": ["https://mail.google.com/*"]
+}
