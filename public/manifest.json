@@ -12,7 +12,8 @@
   "content_scripts": [
     {
       "matches": ["https://mail.google.com/*"],
-      "js": ["wd-extension-load.js"]
+      "js": ["wd-extension-load.js"],
+      "css": ["assets/style.css"]
     }
   ],
   "web_accessible_resources": [
