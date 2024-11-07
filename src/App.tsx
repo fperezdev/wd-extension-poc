@@ -1,4 +1,7 @@
 import MainButton from "./components/MainButton";
+import { observeSelectedMessage } from "./utils/observer";
+
+observeSelectedMessage();
 
 function App() {
   return (
