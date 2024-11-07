@@ -1,3 +1,5 @@
+import { useStore } from "@/stores/store";
+
 let selectedMessageId: string | null = null;
 
 export async function observeSelectedMessage() {
@@ -38,6 +40,8 @@ function ackSelectedThreadIdChange() {
   if (!selectedMessage) return;
 
   const threadId = selectedMessage.getAttribute("data-convid");
+
+  useStore.getState().setSelectedThreadId(threadId);
 
   console.log("wd-ext", threadId);
 }
