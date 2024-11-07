@@ -1,72 +1,45 @@
+let selectedMessageId: string | null = null;
+
 export async function observeSelectedMessage() {
-  waitForElement('[data-app-section="MessageList"]', observeMessageList);
+  waitForElement(
+    "[data-app-section='MailReadCompose']",
+    observeMailReadCompose
+  );
+}
+// "data-app-section='MailReadCompose'"
+// "[data-app-section='MessageList'"
+// "[aria-activedescendant][role=listbox]"
+function observeMailReadCompose(mailReadCompose: Element) {
+  const mailReadComposeObserver = new MutationObserver(() => {
+    ackSelectedThreadIdChange();
+  });
+
+  mailReadComposeObserver.observe(mailReadCompose, {
+    childList: true,
+    subtree: true,
+  });
 }
 
-function observeMessageList(messageListElement: Element) {
-  let selectedMessageObserver: MutationObserver | null = null;
-
-  const selectedMessageElement = document.querySelector(
+function ackSelectedThreadIdChange() {
+  const subListElement = document.querySelector(
     "[aria-activedescendant][role=listbox]"
   );
-  if (selectedMessageElement) {
-    selectedMessageObserver = observeMessageSpecificList(
-      selectedMessageElement,
-      selectedMessageObserver
-    );
-  }
+  if (!subListElement) return;
+  const newSelectedMessageId = subListElement.getAttribute(
+    "aria-activedescendant"
+  );
+  if (!newSelectedMessageId || newSelectedMessageId === selectedMessageId)
+    return;
 
-  const messageListObserver = new MutationObserver(() => {
-    waitForElement(
-      "[aria-activedescendant][role=listbox]",
-      (selectedMessageElement) => {
-        selectedMessageObserver = observeMessageSpecificList(
-          selectedMessageElement,
-          selectedMessageObserver
-        );
-      }
-    );
-  });
+  selectedMessageId = newSelectedMessageId;
 
-  messageListObserver.observe(messageListElement, {
-    childList: true,
-  });
-}
+  const selectedMessage = document.getElementById(newSelectedMessageId);
 
-function observeMessageSpecificList(
-  selectedMessageElement: Element,
-  selectedMessageObserver: MutationObserver | null
-) {
-  if (selectedMessageObserver) selectedMessageObserver.disconnect();
-  selectedMessageObserver = new MutationObserver((mutations) => {
-    mutations.forEach((mutation) => {
-      if (
-        mutation.type === "attributes" &&
-        mutation.attributeName === "aria-activedescendant"
-      ) {
-        const selectedMessageId = selectedMessageElement.getAttribute(
-          "aria-activedescendant"
-        );
+  if (!selectedMessage) return;
 
-        if (!selectedMessageId) return;
+  const threadId = selectedMessage.getAttribute("data-convid");
 
-        const listMessageElement = document.getElementById(selectedMessageId);
-        if (!listMessageElement) return;
-
-        console.log(
-          "wd-ext selected message",
-          listMessageElement.getAttribute("data-convid"),
-          listMessageElement
-        );
-      }
-    });
-  });
-
-  selectedMessageObserver.observe(selectedMessageElement, {
-    attributes: true,
-    attributeFilter: ["aria-activedescendant"],
-  });
-
-  return selectedMessageObserver;
+  console.log("wd-ext", threadId);
 }
 
 function waitForElement(
