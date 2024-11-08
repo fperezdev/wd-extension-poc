@@ -1,6 +1,9 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import App from "./App.tsx";
+import { observeSelectedMessage } from "./utils/observer.ts";
+
+observeSelectedMessage();
 
 createRoot(document.getElementById("wd-extension-container")!).render(
   <StrictMode>

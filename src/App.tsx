@@ -2,10 +2,8 @@ import { useMemo } from "react";
 import MainButton from "./components/MainButton";
 import PendingBadge from "./components/PendingBadge";
 import { useStore } from "./stores/store";
-import { observeSelectedMessage } from "./utils/observer";
 import { overview } from "./queries/overview";
-
-observeSelectedMessage();
+import ActionButton from "./components/ActionButton";
 
 function App() {
   const selectedThreadId = useStore((state) => state.selectedThreadId);
@@ -33,6 +31,7 @@ function App() {
       }}
     >
       <MainButton />
+      <ActionButton />
       {selectedThreadId && pendingMessages.includes(selectedThreadId) && (
         <PendingBadge />
       )}

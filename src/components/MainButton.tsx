@@ -4,7 +4,7 @@ import { Button } from "./ui/button";
 
 const MainButton = () => {
   const handleClick = async () => {
-    alert("Hello from the content script!");
+    alert("Hello from Wird!");
   };
   return (
     <Button
