@@ -1,12 +1,22 @@
-import AppendWrapper from "./components/AppendWrapper";
+import { useMemo } from "react";
 import MainButton from "./components/MainButton";
+import PendingBadge from "./components/PendingBadge";
 import { useStore } from "./stores/store";
 import { observeSelectedMessage } from "./utils/observer";
+import { overview } from "./queries/overview";
 
 observeSelectedMessage();
 
 function App() {
   const selectedThreadId = useStore((state) => state.selectedThreadId);
+  const pendingMessages = useStore((state) => state.pendingMessages);
+
+  const setPendingMessages = useStore((state) => state.setPendingMessages);
+
+  useMemo(async () => {
+    const newPendingMessages = await overview();
+    setPendingMessages(newPendingMessages);
+  }, [setPendingMessages]);
 
   return (
     <div
@@ -23,16 +33,8 @@ function App() {
       }}
     >
       <MainButton />
-      {selectedThreadId && (
-        <AppendWrapper
-          id="action-buttons-container"
-          parentQuery={"[aria-label][role='toolbar'].ms-OverflowSet"}
-          at="start"
-        >
-          <p className="bg-red-600 text-white break-words">
-            {selectedThreadId}
-          </p>
-        </AppendWrapper>
+      {selectedThreadId && pendingMessages.includes(selectedThreadId) && (
+        <PendingBadge />
       )}
     </div>
   );
