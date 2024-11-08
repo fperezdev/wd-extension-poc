@@ -13,7 +13,7 @@
         "https://outlook.office.com/mail/*",
         "https://outlook.office365.com/mail/*"
       ],
-      "js": ["scripts/wd-extension-load.js"],
+      "js": ["scripts/wd-extension-load.js", "scripts/wd-extension-proxy.js"],
       "css": ["assets/style.css"]
     }
   ],
