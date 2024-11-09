@@ -8,8 +8,14 @@ const ActionButton = () => {
   const pendingMessages = useStore((state) => state.pendingMessages);
   const setPendingMessages = useStore((state) => state.setPendingMessages);
   const selectedThreadId = useStore((state) => state.selectedThreadId);
+  const openMenu = useStore((state) => state.openMenu);
 
   const [openPopover, setOpenPopover] = useState(false);
+
+  const actionEnabled =
+    selectedThreadId !== null &&
+    pendingMessages.some((m) => m.threadId === selectedThreadId) &&
+    openMenu;
 
   const handleAction = (action: string) => {
     if (!selectedThreadId) return;
@@ -23,16 +29,15 @@ const ActionButton = () => {
   };
 
   return (
-    <div className="absolute top-[calc(50%-20px+60px)] right-16">
-      <Popover open={openPopover}>
+    <div
+      className={`${openMenu ? "opacity-100" : "opacity-0"} absolute ${openMenu ? "top-[calc(50%-20px+60px)]" : "top-[calc(50%-25px)]"} right-16 transition-[opacity,top]`}
+    >
+      <Popover open={openPopover} onOpenChange={(open) => setOpenPopover(open)}>
         <PopoverTrigger>
           <Button
-            className="w-[40px] h-[40px] pointer-events-auto text-xl bg-pink-500 text-white rounded-full"
-            onClick={() => setOpenPopover(true)}
-            disabled={
-              selectedThreadId === null ||
-              !pendingMessages.some((m) => m.threadId === selectedThreadId)
-            }
+            className="w-[40px] h-[40px] pointer-events-auto text-xl bg-pink-600 text-white rounded-full"
+            onClick={() => setOpenPopover(!openPopover)}
+            disabled={!actionEnabled}
           >
             A
           </Button>

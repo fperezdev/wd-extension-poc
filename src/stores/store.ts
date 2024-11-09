@@ -6,6 +6,8 @@ interface State {
   setSelectedThreadId: (threadId: string | null) => void;
   pendingMessages: Message[];
   setPendingMessages: (messages: Message[]) => void;
+  openMenu: boolean;
+  toggleMenu: () => void;
 }
 
 export const useStore = create<State>()((set) => ({
@@ -15,4 +17,6 @@ export const useStore = create<State>()((set) => ({
   pendingMessages: [],
   setPendingMessages: (messages) =>
     set((state) => ({ ...state, pendingMessages: messages })),
+  openMenu: false,
+  toggleMenu: () => set((state) => ({ ...state, openMenu: !state.openMenu })),
 }));
