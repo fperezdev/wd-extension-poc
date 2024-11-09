@@ -7,9 +7,9 @@
   "object" == typeof exports && "undefined" != typeof module
     ? (module.exports = n())
     : "function" == typeof define && define.amd
-    ? define(n)
-    : ((t = "undefined" != typeof globalThis ? globalThis : t || self).io =
-        n());
+      ? define(n)
+      : ((t = "undefined" != typeof globalThis ? globalThis : t || self).io =
+          n());
 })(this, function () {
   "use strict";
   function t(t, n) {
@@ -49,9 +49,9 @@
               "Map" === r || "Set" === r
                 ? Array.from(n)
                 : "Arguments" === r ||
-                  /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(r)
-                ? t(n, i)
-                : void 0
+                    /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(r)
+                  ? t(n, i)
+                  : void 0
             );
           }
         })(n)) ||
@@ -257,10 +257,10 @@
           ? i(e)
           : m(e, i)
         : b && (e instanceof ArrayBuffer || w(e))
-        ? n
-          ? i(e)
-          : m(new Blob([e]), i)
-        : i(v[r] + (e || ""));
+          ? n
+            ? i(e)
+            : m(new Blob([e]), i)
+          : i(v[r] + (e || ""));
     },
     m = function (t, n) {
       var i = new FileReader();
@@ -276,8 +276,8 @@
     return t instanceof Uint8Array
       ? t
       : t instanceof ArrayBuffer
-      ? new Uint8Array(t)
-      : new Uint8Array(t.buffer, t.byteOffset, t.byteLength);
+        ? new Uint8Array(t)
+        : new Uint8Array(t.buffer, t.byteOffset, t.byteLength);
   }
   for (
     var A = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/",
@@ -295,10 +295,10 @@
       return "b" === i
         ? { type: "message", data: N(t.substring(1), n) }
         : l[i]
-        ? t.length > 1
-          ? { type: l[i], data: t.substring(1) }
-          : { type: l[i] }
-        : d;
+          ? t.length > 1
+            ? { type: l[i], data: t.substring(1) }
+            : { type: l[i] }
+          : d;
     },
     N = function (t, n) {
       if (B) {
@@ -334,8 +334,8 @@
           ? t
           : new Blob([t])
         : t instanceof ArrayBuffer
-        ? t
-        : t.buffer;
+          ? t
+          : t.buffer;
     },
     T = String.fromCharCode(30);
   function U() {
@@ -345,10 +345,10 @@
           y && t.data instanceof Blob
             ? t.data.arrayBuffer().then(k).then(n)
             : b && (t.data instanceof ArrayBuffer || w(t.data))
-            ? n(k(t.data))
-            : g(t, !1, function (t) {
-                p || (p = new TextEncoder()), n(p.encode(t));
-              });
+              ? n(k(t.data))
+              : g(t, !1, function (t) {
+                  p || (p = new TextEncoder()), n(p.encode(t));
+                });
         })(t, function (i) {
           var r,
             e = i.length;
@@ -453,8 +453,8 @@
       "undefined" != typeof self
         ? self
         : "undefined" != typeof window
-        ? window
-        : Function("return this")();
+          ? window
+          : Function("return this")();
   function _(t) {
     for (
       var n = arguments.length, i = new Array(n > 1 ? n - 1 : 0), r = 1;
@@ -1228,8 +1228,8 @@
           ("undefined" != typeof location && location.port
             ? location.port
             : r.secure
-            ? "443"
-            : "80")),
+              ? "443"
+              : "80")),
         (r.transports = []),
         (r.D = {}),
         i.transports.forEach(function (t) {
@@ -1430,10 +1430,10 @@
                         (n = t.charCodeAt(r)) < 128
                           ? (i += 1)
                           : n < 2048
-                          ? (i += 2)
-                          : n < 55296 || n >= 57344
-                          ? (i += 3)
-                          : (r++, (i += 4));
+                            ? (i += 2)
+                            : n < 55296 || n >= 57344
+                              ? (i += 3)
+                              : (r++, (i += 4));
                       return i;
                     })(t)
                   : Math.ceil(1.33 * (t.byteLength || t.size))),
@@ -1496,8 +1496,8 @@
                   t.upgrading ? r() : n();
                 })
               : this.upgrading
-              ? r()
-              : n()),
+                ? r()
+                : n()),
           this
         );
       }),

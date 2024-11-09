@@ -7,7 +7,8 @@
     "dev": "vite",
     "build": "tsc -b && vite build && npx tailwindcss build -i src/index.css -o dist/assets/style.css",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "format": "prettier --write . --end-of-line lf"
   },
   "dependencies": {
     "@radix-ui/react-popover": "^1.1.2",
@@ -29,9 +30,11 @@
     "@types/react-dom": "^18.3.1",
     "@vitejs/plugin-react": "^4.3.3",
     "eslint": "^9.13.0",
+    "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-react-hooks": "^5.0.0",
     "eslint-plugin-react-refresh": "^0.4.14",
     "globals": "^15.11.0",
+    "prettier": "^3.3.3",
     "tailwindcss": "^3.4.14",
     "typescript": "~5.6.2",
     "typescript-eslint": "^8.11.0",
