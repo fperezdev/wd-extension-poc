@@ -2,7 +2,7 @@ import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import App from "./App.tsx";
 import { observeSelectedMessage } from "./utils/observer.ts";
-import { connectToBackground } from "./utils/background.ts";
+import { connectToBackground } from "./utils/background-connection.ts";
 
 observeSelectedMessage();
 

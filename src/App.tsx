@@ -1,20 +1,11 @@
-import { useMemo } from "react";
 import MainButton from "./components/MainButton";
 import PendingBadge from "./components/PendingBadge";
 import { useStore } from "./stores/store";
-import { overview } from "./queries/overview";
 import ActionButton from "./components/ActionButton";
 
 function App() {
   const selectedThreadId = useStore((state) => state.selectedThreadId);
   const pendingMessages = useStore((state) => state.pendingMessages);
-
-  const setPendingMessages = useStore((state) => state.setPendingMessages);
-
-  useMemo(async () => {
-    const newPendingMessages = await overview();
-    setPendingMessages(newPendingMessages);
-  }, [setPendingMessages]);
 
   return (
     <div
@@ -32,9 +23,10 @@ function App() {
     >
       <MainButton />
       <ActionButton />
-      {selectedThreadId && pendingMessages.includes(selectedThreadId) && (
-        <PendingBadge />
-      )}
+      {selectedThreadId &&
+        pendingMessages.some((m) => m.threadId === selectedThreadId) && (
+          <PendingBadge />
+        )}
     </div>
   );
 }

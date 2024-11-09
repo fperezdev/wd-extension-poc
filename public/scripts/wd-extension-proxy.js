@@ -6,6 +6,7 @@ window.addEventListener("message", function (event) {
   this.chrome.runtime.sendMessage({ data: event.data });
 });
 
-chrome.runtime.onMessage.addListener((request, sender) => {
-  console.log("wd-ext Received message from background:", request, sender);
+chrome.runtime.onMessage.addListener((request, _sender, _sendResponse) => {
+  if (!request.data || request.origin !== "wd-extension-background") return;
+  window.postMessage(request, "/");
 });
