@@ -1,17 +1,18 @@
+import { SELECTOR } from "@/lib/consts";
 import { useStore } from "@/stores/store";
 
 let selectedMessageId: string | null = null;
 
+/**
+ * Observe the selected message in outlook mail list.
+ * It observes changes in mail read area and when it changes
+ * it updates the selected thread id in the store.
+ */
 export async function observeSelectedMessage() {
-  waitForElement(
-    "[data-app-section='MailReadCompose']",
-    observeMailReadCompose
-  );
+  waitForElement(SELECTOR.OUTLOOK_MAIL_READ, observeMailReadArea);
 }
-// "data-app-section='MailReadCompose'"
-// "[data-app-section='MessageList'"
-// "[aria-activedescendant][role=listbox]"
-function observeMailReadCompose(mailReadCompose: Element) {
+
+function observeMailReadArea(mailReadCompose: Element) {
   const mailReadComposeObserver = new MutationObserver(() => {
     ackSelectedThreadIdChange();
   });
@@ -22,13 +23,14 @@ function observeMailReadCompose(mailReadCompose: Element) {
   });
 }
 
+/**
+ * If the selected thread id changes, update the store.
+ */
 function ackSelectedThreadIdChange() {
-  const subListElement = document.querySelector(
-    "[aria-activedescendant][role=listbox]"
-  );
-  if (!subListElement) return;
-  const newSelectedMessageId = subListElement.getAttribute(
-    "aria-activedescendant"
+  const listElement = document.querySelector(SELECTOR.OUTLOOK_MAIL_LIST);
+  if (!listElement) return;
+  const newSelectedMessageId = listElement.getAttribute(
+    SELECTOR.OUTLOOK_ACTIVE_LIST_ITEM_ID_ATTR
   );
   if (!newSelectedMessageId || newSelectedMessageId === selectedMessageId)
     return;
@@ -39,13 +41,16 @@ function ackSelectedThreadIdChange() {
 
   if (!selectedMessage) return;
 
-  const threadId = selectedMessage.getAttribute("data-convid");
+  const threadId = selectedMessage.getAttribute(
+    SELECTOR.OUTLOOK_ACTIVE_LIST_ITEM_THREAD_ID_ATTR
+  );
 
   useStore.getState().setSelectedThreadId(threadId);
-
-  console.log("wd-ext", threadId);
 }
 
+/**
+ * Wait for an element to be added to the DOM and call the callback with the element.
+ */
 function waitForElement(
   selector: string,
   callback: (element: Element) => void

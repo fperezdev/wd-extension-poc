@@ -1,6 +1,8 @@
+const WD_EXTENSION_CONTAINER_ID = "wd-extension-container";
+
 window.onload = () => {
   const extensionContainer = document.createElement("div");
-  extensionContainer.id = "wd-extension-container";
+  extensionContainer.id = WD_EXTENSION_CONTAINER_ID;
   document.body.appendChild(extensionContainer);
 
   const script = document.createElement("script");
